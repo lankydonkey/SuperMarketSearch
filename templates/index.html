@@ -7,21 +7,4 @@
         <input type="text" name="textsearch" id="textsearch">
         <input type="submit" name="my-form" value="GO">
     </form>
-    <table class="table table-hover">
-        <tr>
-            <th>Rank</th>
-            <th>Store</th>
-            <th>Product</th>
-            <th>Price per</th>
-        </tr>
-        {% for month in months %}
-            {{ macros.weather_row(month,
-                                  weather[month]['min'],
-                                  weather[month]['max'],
-                                  weather[month]['rain'],
-                                  highlight['min'],
-                                  highlight['max'],
-                                  highlight['rain']) }}
-        {% endfor %}
-    </table>
 {% endblock %}

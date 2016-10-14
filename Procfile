@@ -1,1 +1,1 @@
-web: gunicorn --log-file - supermarketsearch:app
+web: gunicorn --log-file - supermarketsearcwh:app

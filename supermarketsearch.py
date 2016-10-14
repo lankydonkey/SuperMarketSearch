@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+import time
 from flask import Flask, render_template
 from flask import request
 from flask.ext.bootstrap import Bootstrap
@@ -15,16 +17,17 @@ def index():
 def run_query():
 
    text_search=request.form['textsearch']
+   start_time = time.time()
    results=ps.get_all_prices(text_search)
+   tm = ' in '+str(int(time.time() - start_time)) +' seconds'
+   amount=len(results)
    print(results)
-   return render_template('results.html', results=results)
+   return render_template('results.html', amount=amount,tm=tm,results=results)
 
 
 @app.errorhandler(404)
 def not_found(e):
     return render_template('404.html')
-
-
 
 
 

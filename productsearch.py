@@ -57,9 +57,12 @@ def get_prices(store="Tesco",product="Heineken",results=[],multiplier=1):
         if "p" in price:
             price = price.replace("p", "")
             price = round(float(price) * multiplier / 100, 2)
-        elif "£" in price:
-            price = price.replace("£", "")
+        else: #remove any non ascii chars such as £ sign
+            price = ''.join(a for a in price if ord(a) < 128)
             price = round(float(price) * multiplier, 2)
+            #elif "£" in price:
+         #   price = price.replace("£", "")
+            #price = round(float(price) * multiplier, 2)
         ap = item.find_all("span", {"class": "Price"})
         apoff = item.find_all("span", {"class": "Offer"})
         if apoff:

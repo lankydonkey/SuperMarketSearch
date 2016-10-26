@@ -1,15 +1,30 @@
 # -*- coding: utf-8 -*-
+
 import requests
 import bs4
-#comment
+#http://www.mysupermarket.co.uk/Shopping/FindProducts.aspx?query=lager&store=tesco&page=2
 stores=["Asda","Tesco","Sainsburys","Morrisons","Waitrose","Ocado","Aldi","M_and_S","Iceland","Amazon","Boots","Poundland","Poundstretcher"]
 
 def get_all_prices(product="heineken",multiplier=1):
     results=[]
     total=0
+    '''
+        for store in stores:
+
+            page=1
+            more_pages=True
+            while more_pages:
+                more_pages=get_prices(store,product,results,multiplier,page)
+                results = sorted(results, key=lambda x: x[2])
+                if more_pages: #there are more pages to get
+                    page+=1
+    '''
+
     for store in stores:
-        get_prices(store,product,results,multiplier)
-    results=sorted(results,key=lambda x:x[2])
+        get_prices(store, product, results, multiplier)
+    results = sorted(results, key=lambda x: x[2])
+
+
     if results:
         tooltip=""
         for item in results:
@@ -30,14 +45,14 @@ def get_all_prices(product="heineken",multiplier=1):
 
 def get_prices(store="Tesco",product="Heineken",results=[],multiplier=1):
 
-    link=""
-    promotion=""
     web_url="http://www.mysupermarket.co.uk/Shopping/FindProducts.aspx?query="+product+"&store="+store
     print (web_url)
     res = requests.get(web_url)
     html=bs4.BeautifulSoup(res.text, "html.parser")
     items=html.find_all("div",{"class":"DetailsWrp"})
     for item in items:
+        promotion = ""
+        link = ""
         ci=item.find_all("h3",{"class":"Name"})
         product_name = ci[0].text.replace("\n", "")
         pi=item.find_all("div",{"class":"PpuWrp"})
@@ -82,6 +97,8 @@ def get_prices(store="Tesco",product="Heineken",results=[],multiplier=1):
         #if "4%" not in product_name and "Cidre" not in product_name and "Free" not in product_name :
         if not any(word in product_name for word in remove_list):
             results+=[[store,product_name,price,link,actual_price,promotion,price_per]]
+
+
 
 def get_product_link(store,product,product_name):
     # cos ive now added price into product_name will have to search by just product for now

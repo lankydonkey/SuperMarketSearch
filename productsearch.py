@@ -76,7 +76,9 @@ def get_prices(store="Tesco",product="Heineken",results=[],multiplier=1):
 
         link=get_product_link(store,product,product_name)
 
-        remove_list=["Alcoholic","Alcohol","4%","Cidre","Free","Tonic","Lime","Orange","WKD","Cranberry","Garlic","Sweet","BBQ","Verde","Cola"]
+        remove_list=[]
+        # remove_list=["Alcoholic","Alcohol","4%","Cidre","Free","Tonic","Lime","Orange","WKD","Cranberry",
+         #            "Garlic","Sweet","BBQ","Verde","Cola"]
         #if "4%" not in product_name and "Cidre" not in product_name and "Free" not in product_name :
         if not any(word in product_name for word in remove_list):
             results+=[[store,product_name,price,link,actual_price,promotion,price_per]]
